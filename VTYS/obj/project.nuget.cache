@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "KD+ZyfRSi4Nvhr/r1lvhKb6oSGoAA6fYTE2x91mQ0b3eABtyOTTowJOGYvZrvVYgm5KG6g14TL0l+/tPr8wdsw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\İbrahim\\Source\\Repos\\VTYS\\VTYS.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\İbrahim\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\İbrahim\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\İbrahim\\.nuget\\packages\\npgsql\\8.0.1\\npgsql.8.0.1.nupkg.sha512",
+    "C:\\Users\\İbrahim\\.nuget\\packages\\system.diagnostics.diagnosticsource\\8.0.0\\system.diagnostics.diagnosticsource.8.0.0.nupkg.sha512",
+    "C:\\Users\\İbrahim\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\İbrahim\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512",
+    "C:\\Users\\İbrahim\\.nuget\\packages\\system.text.json\\8.0.0\\system.text.json.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
