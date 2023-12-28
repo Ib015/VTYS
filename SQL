@@ -1,0 +1,333 @@
+create table "Kisi" (
+"KisiNo" SERIAL,
+"TCNo" NUMERIC(11) UNIQUE NOT NULL,
+"Ad" VARCHAR(40),
+"Soyad" VARCHAR(40),
+"KisiTuru" VARCHAR(40),
+CONSTRAINT "KisiNoPK" PRIMARY key ("KisiNo") 
+);
+
+create table "iletisimBilgileri" (
+"TelNo" numeric(11),
+"email" varchar(50) UNIQUE,
+"Adres" varchar(80),
+"KisiNo" integer,
+CONSTRAINT "TelNoPK" PRIMARY key ("TelNo"),
+CONSTRAINT "KisiNoFK" FOREIGN key ("KisiNo") REFERENCES "Kisi"("KisiNo") 
+on delete cascade on update cascade
+);
+
+create table "GirisCikis" (
+"OgrenciNo" varchar(10),
+"Tarih" DATE,
+"GirisSaati" time,
+"CıkısSaati" TIME,
+CONSTRAINT "OgrenciNoPK" PRIMARY key ("OgrenciNo")
+);
+
+create table "Odeme" (
+"OgrenciNo" VARCHAR(10),
+"SonOdeme" DATE DEFAULT '2023-12-31',
+"OdemeDurumu" BOOLEAN,
+CONSTRAINT "OgrenciNoPK1" PRIMARY key ("OgrenciNo")
+);
+
+create table "Oda" (
+"BlokOda" varchar(5),
+"KisiSayisi" SMALLINT,
+"MetreKare" SMALLINT,
+CONSTRAINT "OdaPK" PRImary key ("BlokOda")
+);
+
+create table "Ogrenci"(
+"KisiNo" INTEGER,
+"Okul" varchar(10),
+"Bolum" VARCHAR(30),
+"OgrenciNo" VARCHAR(10),
+"BlokOda" varchar(5),
+CONSTRAINT "KisiNoPK1" PRIMARY key ("KisiNo")
+);
+
+Alter table "Ogrenci" add CONSTRAINT "KisiNoFK1" FOREIGN key ("KisiNo") REFERENCES "Kisi"("KisiNo");
+alter table "Ogrenci" add constraint "OgrenciNoFK1" FOREIGN key ("OgrenciNo") REFERENCES "Odeme"("OgrenciNo");
+ALTER table "Ogrenci" add CONSTRAINT "OdaFK" FOREIGN key ("BlokOda") REFERENCES "Oda"("BlokOda");
+
+CREATE  table "Personel"(
+"KisiNo" integer,
+"SicilNo" integer,
+"Maas" integer,
+"PersonelTipi" varchar(40),
+CONSTRAINT "KisiNoPK2" primary key ("KisiNo"),
+CONSTRAINT "KisiNoFK2" FOREIGN key ("KisiNo") REFERENCES "Kisi"("KisiNo") on delete cascade on update cascade
+);
+
+create table "Yonetici"(
+"KisiNo" integer,
+"Unvan" varchar(40),
+"EğitimDuzeyi" varchar(40),
+CONSTRAINT "KisiNoPK3" primary key ("KisiNo"),
+CONSTRAINT "KisiNoFK3" FOREIGN key ("KisiNo") REFERENCES "Personel"("KisiNo") on delete cascade on update cascade
+);
+
+create table "Memur" (
+"KisiNo" integer,
+"Unvan" varchar(40),
+"CalismaSaati" varchar(30),
+CONSTRAINT "KisiNoPK4" PRIMARY key ("KisiNo"),
+CONSTRAINT "KisiNoFK4" FOREIGN key ("KisiNo") REFERENCES "Personel"("KisiNo") on delete cascade on update cascade
+);
+
+create table "TemizlikPersoneli" (
+"KisiNo" integer,
+"Blok" char(1),
+"Kat" SMALLINT,
+"CalismaSaati" Varchar(40),
+CONSTRAINT "KisiNoPK5" PRIMARY key ("KisiNo"),
+CONSTRAINT "KisiNoFK5" FOREIGN key ("KisiNo") REFERENCES "Personel"("KisiNo") on delete cascade on update cascade
+);
+
+create table "GüvenlikPersoneli" (
+"KisiNo" INTEGER,
+"NobetSaati" TIME,
+CONSTRAINT "KisiNoPK6" PRIMARY key ("KisiNo"),
+CONSTRAINT "KisiNoFK6" FOREIGN key ("KisiNo") REFERENCES "Personel"("KisiNo") on delete cascade on update cascade
+);
+
+create table "YemekhanePersoneli" (
+"KisiNo" integer,
+"CalismaSaati" varchar(40),
+"MolaSaati" varchar(40),
+"Gorev" varchar(40),
+CONSTRAINT "KisiNoPK7" primary key ("KisiNo"),
+CONSTRAINT "KisiNoFK7" FOREIGN key ("KisiNo") REFERENCES "Personel"("KisiNo") on delete cascade on update cascade
+);
+
+create table "YemekMenusu" (
+"MenuID" SERIAL,
+"Tarih" DATE,
+"KahvaltiSaati" varchar(40),
+"AksamYemegiSaati" varchar(40),
+"KahvaltiMenu" varchar(80),
+"AksamYemegiMenu" VARCHAR(80),
+CONSTRAINT "MenuIDPK" PRIMARY key ("MenuID")
+);
+
+create table "Asci" (
+"KisiNo" integer,
+"GidaGuvenligiSertifikasi" BOOLEAN,
+"CalismaHizi" integer,
+"Menu" INTEGER,
+CONSTRAINT "KisiNoPK8" PRIMARY key ("KisiNo"),
+CONSTRAINT "KisiNoFK8" FOREIGN key ("KisiNo") REFERENCES "YemekhanePersoneli"("KisiNo"),
+CONSTRAINT "MenuFK" foreign key ("Menu") REFERENCES "YemekMenusu"("MenuID") on delete cascade on update cascade
+);
+
+create table "Bulasikci" (
+"KisiNo" INTEGER,
+"Hijyen" INTEGER,
+"Hiz" INTEGER,
+CONSTRAINT "KisiNoPK9" PRIMARY key ("KisiNo"),
+CONSTRAINT "KisiNoFk9" FOREIGN key ("KisiNo") REFERENCES "YemekhanePersoneli"("KisiNo") on delete cascade on update cascade
+);
+
+insert into "Kisi" ("TCNo","Ad","Soyad","KisiTuru") values 
+('37404795756','Yasemin','Kilic','Personel'),
+('58744720143','Melek','Demir','Personel'),
+('74501357602','Ahmet','Sonuc','Personel'),
+('35821380815','Niyazi','Saglam','Personel'),
+('94767070787','Kadir','Kurt','Personel'),
+('34432619482','Hacer','Dogan','Personel'),
+('55277558038','Elif','Acar','Personel'),
+('22623638489','Bekir','Tas','Personel'),
+('85864724862','Muhammet','Sen','Personel'),
+('57874790042','Filiz','Guler','Personel'),
+('24872819260','Leyla','Avci','Personel'),
+('69023032258','Ugur','Celik','Personel'),
+('40299960746','Ibrahim','Durna','Personel'),
+('23794461259','Hatice','Sari','Personel'),
+('50617836339','Havva','Ozdemir','Personel'),
+('66642805300','Cemal','Dogan','Personel'),
+('76269384939','Baki','Dogan','Personel'),
+('96465771296','Cansu','Simsek','Personel'),
+('34360958870','Emre','Kose','Ogrenci'),
+('79563282970','Recep','Erdogan','Ogrenci'),
+('84920115167','Yusuf','Ozcan','Ogrenci'),
+('94207725503','Hasan','Dogan','Ogrenci'),
+('90298775491','Enes','Kaplan','Ogrenci'),
+('16832949681','Yasar','Yildirim','Ogrenci'),
+('93080450622','Adem','Gunes','Ogrenci'),
+('46459767499','Serkan','Cetin','Ogrenci'),
+('39940291942','Onur','Acar','Ogrenci'),
+('64872846222','Yasin','Aktas','Ogrenci'),
+('71794373147','Recep','Bozkurt','Ogrenci'),
+('51699221727','Mehmet','Demir','Ogrenci'),
+('35576142554','Kemal','Isık','Ogrenci'),
+('33277771524','Mahmut','Celik','Ogrenci'),
+('17549484657','Adem','Can','Ogrenci'),
+('71645892110','Yakup','Korkmaz','Ogrenci'),
+('50662837136','Hüseyin','Huner','Ogrenci'),
+('90979404122','Arif','Keser','Ogrenci'),
+('50606632043','Cantug','Ozsoy','Ogrenci'),
+('98248405524','Irfan Can','Kahveci','Ogrenci'),
+('36991463421','Arda','Turan','Ogrenci'),
+('30187615021','Arda','Guler','Ogrenci'),
+('94264223393','Ferdi','Kadıoglu','Ogrenci'),
+('99034753186','Fatih','Terim','Ogrenci'),
+('85048749333','Okan','Buruk','Ogrenci'),
+('70948958001','Ismail','Kartal','Ogrenci'),
+('17546993829','Suleyman','Yavuz','Ogrenci'),
+('69855508618','Ali','Bas','Ogrenci'),
+('33852658436','Bayram','Yarar','Ogrenci');
+
+INSERT into "Kisi" ("TCNo","Ad","Soyad","KisiTuru") values 
+('37677443495','Mehmet','Horuz','Personel');
+
+insert into "Personel" ("KisiNo","SicilNo","Maas","PersonelTipi") values 
+('1','0254','40000','Memur'),
+('2','2865','30000','Temizlik Personeli'),
+('3','0028','30000','Temizlik Personeli'),
+('4','2504','1000000','Yonetici'),
+('5','8753','40000','Memur'),
+('6','3689','35000','Guvenlik Personeli'),
+('7','2754','75000','Yonetici'),
+('8','1964','35000','Guvenlik Personeli'),
+('9','9018','40000','Memur'),
+('10','4862','40000','Memur'),
+('11','1796','35000','Guvenlik Personeli'),
+('12','9654','30000','Yemekhane Personeli'),
+('13','5739','30000','Yemekhane Personeli'),
+('14','9572','30000','Yemekhane Personeli'),
+('15','8350','30000','Yemekhane Personeli'),
+('16','1683','30000','Temizlik Personeli'),
+('17','8649','30000','Temizlik Personeli'),
+('18','2859','30000','Temizlik Personeli'),
+('48','5846','30000','Temizlik Personeli');
+
+insert into "Odeme" ("OgrenciNo","OdemeDurumu") values 
+('86630','1'),
+('98345','0'),
+('32486','1'),
+('48363','1'),
+('23683','0'),
+('12678','0'),
+('27946','0'),
+('49612','0'),
+('28842','1'),
+('12373','1'),
+('84289','0'),
+('54982','1'),
+('12783','0'),
+('48923','0'),
+('12456','1'),
+('21378','1'),
+('34269','1'),
+('23787','0'),
+('12367','0'),
+('58931','1'),
+('18431','0'),
+('12993','1'),
+('44782','0'),
+('32492','0'),
+('54132','1'),
+('34981','1'),
+('95336','0'),
+('16548','1'),
+('23441','1');
+
+insert into "Oda" ("BlokOda","KisiSayisi","MetreKare") values 
+('A35','4','25'),
+('A29','4','25'),
+('C118','4','25'),
+('B24','3','20'),
+('C56','4','25'),
+('B17','3','20'),
+('C8','2','15'),
+('A73','2','15'),
+('C99','3','20');
+
+insert into "Ogrenci" ("KisiNo","Okul","Bolum","OgrenciNo","BlokOda") values
+('19','SAU','Bilgisayar Muh','86630','A35'),
+('20','SAU','Bilgisayar Muh','98345','A35'),
+('21','SAU','Makine Muh','32486','A35'),
+('22','SAU','Tip','48363','A35'),
+('23','SAU','Cevre Muh','23683','A29'),
+('24','SAU','Dis','12678','A29'),
+('25','SAU','Endustri Muh','27946','A29'),
+('26','SAU','Makine Muh','49612','A29'),
+('27','SAU','Bilgisayar Muh','28842','C118'),
+('28','SAU','Makine Muh','12373','C118'),
+('29','SAU','Dis','84289','C118'),
+('30','SAU','Endustri Muh','54982','C118'),
+('31','SAU','Cevre Muh','12783','B24'),
+('32','SAU','Tip','48923','B24'),
+('33','SAU','Makine Muh','12456','B24'),
+('34','SAU','Bilgisayar Muh','21378','C56'),
+('35','SAU','Endustri Muh','34269','C56'),
+('36','SAU','Tip','23787','C56'),
+('37','SAU','Cevre Muh','12367','C56'),
+('38','SAU','Bilgisayar Muh','58931','B17'),
+('39','SAU','Endustri Muh','18431','B17'),
+('40','SUBU','Makine Muh','12993','B17'),
+('41','SUBU','Dis','44782','C8'),
+('42','SUBU','Bilgisayar Muh','32492','C8'),
+('43','SUBU','Makine Muh','54132','A73'),
+('44','SUBU','Tip','34981','A73'),
+('45','SUBU','Tip','95336','C99'),
+('46','SUBU','Endustri Muh','16548','C99'),
+('47','SUBU','Bilgisayar Muh','23441','C99');
+
+insert into "Yonetici" ("KisiNo","Unvan","EğitimDuzeyi") values 
+('4','Mudur','MIT Business'),
+('7','Mudur Yardimcisi','Lise');
+
+insert into "Memur" ("KisiNo","Unvan","CalismaSaati") values 
+('1','Ogrenci Isleri','08:00-17:00'), 
+('5','Psikolog','08:00-17:00'),
+('9','Sekreter','08:00-17:00'),
+('10','Sekreter','08:00-17:00');
+
+insert into "TemizlikPersoneli" ("KisiNo","Blok","Kat","CalismaSaati") values 
+('2','A','1','08:00-17:00'),
+('3','A','2','08:00-17:00'),
+('16','B','1','08:00-17:00'),
+('17','B','2','08:00-17:00'),
+('18','C','1','08:00-17:00'),
+('48','C','2','08:00-17:00');
+
+insert into "GüvenlikPersoneli" ("KisiNo","NobetSaati") values 
+('6','08:00:00'),
+('8','16:00:00'),
+('11','00:00:00');
+
+insert into "YemekhanePersoneli" ("KisiNo","CalismaSaati","MolaSaati","Gorev") VALUES
+('12','07:00-15:00','12:00-13:00','Asci'),
+('13','07:00-15:00','12:00-13:00','Bulasikci'),
+('14','16:00-00:00','21:00-22:00','Asci'),
+('15','16:00-00:00','21:00-22:00','Bulasikci');
+
+insert into "YemekMenusu" ("Tarih","KahvaltiSaati","KahvaltiMenu","AksamYemegiSaati","AksamYemegiMenu") values 
+('01-01-2024','07:00-12:00','Peynir,zeytin,domates,salatalik,simit,cay','16:00-23:00','Mercimek,Kuru Fasulye,Pirinc Pilavi,Salata'),
+('02-01-2024','07:00-12:00','Peynir,zeytin,domates,salatalik,pogaca,cay','16:00-23:00','Sehriye,Nohut,Pirinc Pilavi,Salata'),
+('03-01-2024','07:00-12:00','Peynir,zeytin,domates,salatalik,simit,cay','16:00-23:00','Tavuksuyu,Bezelye,Bulgur Pilavi,Salata'),
+('04-01-2024','07:00-12:00','Peynir,zeytin,domates,salatalik,pogaca,cay','16:00-23:00','Mercimek,Karniyarik,Pirinc Pilavi,Salata'),
+('05-01-2024','07:00-12:00','Peynir,zeytin,domates,salatalik,simit,cay','16:00-23:00','Tavuksuyu,Taze Fasulye,Bulgur Pilavi,Salata');
+
+insert into "Asci" ("KisiNo","GidaGuvenligiSertifikasi","CalismaHizi","Menu") values 
+('12','0','4','1'),
+('14','0','2','2');
+
+insert into "Bulasikci" ("KisiNo","Hijyen","Hiz") values 
+('13','3','4'),
+('15','2','5');
+
+INSERT INTO "iletisimBilgileri" ("TelNo","email","Adres","KisiNo") values 
+('05324573475','yaseminkilic@gmail.com','istanbul','1'),
+('05382459650','melekdemir@gmail.com','sakarya','2'),
+('05456783430','ahmetsonuc@gmail.com','sakarya','3'),
+('05335680919','niyazisaglam@gmail.com','kocaeli','4'),
+('05364115773','kadirkurt@gmail.com','bursa','5');
+
+
+
+
+
